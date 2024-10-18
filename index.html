@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nCreate Unusable Form</title>
+    <style>
+        body {
+            background-color: #ff00ff;
+            color: #00ff00;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0000ff;
+        }
+
+        form {
+            margin: 50px auto;
+            width: 80%;
+            position: relative;
+        }
+
+        input[type="text"], input[type="email"], textarea {
+            width: 30px;
+            height: 10px;
+            background-color: #f0f0f0;
+            border: none;
+            outline: none;
+            font-size: 8px;
+            margin: 20px;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:hover, input[type="email"]:hover {
+            background-color: #ff00ff;
+            color: white;
+        }
+
+        /* Make placeholders more visible */
+input::placeholder {
+    color: #ff0000; /* Bright red placeholder text */
+    font-size: 12px; /* Slightly larger font size */
+    font-weight: bold; /* Make the placeholder bold */
+}
+
+
+        textarea {
+            width: 50px;
+            height: 20px;
+        }
+
+        button {
+            font-size: 14px;
+            padding: 10px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        button:hover {
+            background-color: #0000ff;
+        }
+
+        /* Hidden submit button */
+        #submit {
+            position: absolute;
+            left: -9999px;
+        }
+
+        /* Unlabeled radio buttons */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+        }
+
+        /* Disappearing input fields */
+        .input-field {
+            display: block;
+            animation: disappear 10s infinite;
+        }
+
+        @keyframes disappear {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Flashing background */
+        @keyframes flashBackground {
+            0% { background-color: #ff00ff; }
+            25% { background-color: #00ffff; }
+            50% { background-color: #ffff00; }
+            75% { background-color: #ff0000; }
+            100% { background-color: #00ff00; }
+        }
+        body {
+            animation: flashBackground 5s infinite;
+        }
+
+        /* Overlapping fields */
+        .overlap {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+        }
+
+        /* Hide form initially */
+        #unusableForm {
+            display: none;
+        }
+
+        /* Popup styling */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            color: white;
+            font-size: 50px;
+            text-align: center;
+            padding-top: 200px;
+        }
+
+        #closePopup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            font-size: 5px;
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>nCreate Unusable Submission Form</h1>
+
+    <div id="popup">
+        HELLO
+        <button id="closePopup">x</button>
+    </div>
+
+    <form id="unusableForm">
+        <!-- Name input with label in front -->
+        <div style="display: flex; align-items: center;">
+            <label for="name">Name:</label>
+            <input type="text" id="name" class="input-field" style="margin-left: 20px;">
+        </div>
+
+        <!-- Email input with label in front -->
+        <div style="display: flex; align-items: center;">
+            <label for="email">Email:</label>
+            <input type="email" id="email" class="input-field" style="margin-left: 20px;">
+        </div>
+
+        <!-- Overlapping elements -->
+        <textarea placeholder="Enter your comments"></textarea>
+        <button class="overlap" style="z-index: 1000;">This is Overlapping!</button>
+
+        <!-- Labeled radio buttons -->
+        <div class="radio-group">
+            <label>Choose an option:</label>
+            <input type="radio" name="choice" id="choice1"> Peanut Butter and Pickles
+            <input type="radio" name="choice" id="choice2"> Pineapple on Pizza
+            <input type="radio" name="choice" id="choice3"> A 3-hour session of YouTube Motivation and Deshdrohi Movie together
+        </div>
+
+        <!-- Flashing submit button -->
+        <button id="submit">Submit</button>
+
+        <!-- Hidden Reset button -->
+        <button type="reset" id="reset" style="position: absolute; left: -9999px;">Reset</button>
+    </form>
+
+    <script>
+        // Function to ask for the first 15 digits of Pi
+        function askForPi() {
+            const userInput = prompt('Please enter the first 15 digits of Pi to proceed:');
+            const piDigits = "3.14159265358979"; // The first 15 digits of Pi
+
+            if (userInput === piDigits) {
+                document.getElementById('unusableForm').style.display = 'block';
+                alert('Correct! You may now fill out the form.');
+            } else {
+                alert('Incorrect digits. Try again.');
+                askForPi(); // Recurse if they enter the wrong digits
+            }
+        }
+
+        // Call the function immediately on page load
+        window.onload = function() {
+            askForPi();
+            showPopup();
+            setInterval(showPopup, 10000); // Show popup every 10 seconds
+        };
+
+        // Show the popup
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        // Close the popup
+        document.getElementById('closePopup').addEventListener('click', function() {
+            document.getElementById('popup').style.display = 'none';
+        });
+
+        // 3. Flashing submit button
+        setInterval(function() {
+            const submitButton = document.getElementById('submit');
+            submitButton.style.backgroundColor = submitButton.style.backgroundColor === 'red' ? 'blue' : 'red';
+        }, 500);
+
+        // 2. Non-clickable submit button
+        document.querySelector('form').addEventListener('mousemove', function(e) {
+            const submitButton = document.getElementById('submit');
+            submitButton.style.left = `${e.pageX}px`;
+        });
+
+        // 5. Delayed typing feedback
+        const textInputs = document.querySelectorAll('input[type="text"], input[type="email"], textarea');
+        textInputs.forEach(input => {
+            input.addEventListener('input', function(e) {
+                const inputText = e.target.value;
+                e.target.value = '';
+                setTimeout(() => {
+                    e.target.value = inputText;
+                }, 1000); // 1 second delay
+            });
+        });
+
+        // 11. Form reset on idle
+        let timeout;
+        const resetFormOnIdle = () => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                document.getElementById('unusableForm').reset();
+                alert('Form reset due to inactivity.');
+            }, 5000); // 5-second idle reset
+        };
+
+        document.addEventListener('mousemove', resetFormOnIdle);
+        document.addEventListener('keypress', resetFormOnIdle);
+
+        // 26. Submit button with a fake timer
+        const submitButton = document.getElementById('submit');
+        let timer = 10;
+        const countdown = setInterval(() => {
+            submitButton.innerText = `Submit (${timer})`;
+            timer--;
+            if (timer < 0) {
+                timer = 10;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
